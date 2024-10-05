@@ -1,3 +1,4 @@
+'use strict'
 const electron = require('electron')
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
@@ -17,7 +18,9 @@ app.on('window-all-closed', function() {
 app.on('ready', function () {
     mainWindow = new BrowserWindow({width: 1360, height: 800})
     mainWindow.loadURL('file://' + __dirname + '/index.html')
-    mainWindow.webContents.openDevTools()
+    if (!process.env.PRODUCTION) {
+        mainWindow.openDevTools()
+    }
     mainWindow.on('closed', function () {
         mainWindow = null
     })
